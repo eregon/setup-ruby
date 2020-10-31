@@ -52866,7 +52866,7 @@ const tc = __webpack_require__(188)
 const common = __webpack_require__(390)
 const rubyBuilderVersions = __webpack_require__(694)
 
-const builderReleaseTag = 'enable-shared'
+const builderReleaseTag = 'load-relative'
 const releasesURL = 'https://github.com/ruby/ruby-builder/releases'
 
 const windows = common.windows

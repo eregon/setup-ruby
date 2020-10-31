@@ -6,7 +6,7 @@ const tc = require('@actions/tool-cache')
 const common = require('./common')
 const rubyBuilderVersions = require('./ruby-builder-versions')
 
-const builderReleaseTag = 'enable-shared'
+const builderReleaseTag = 'load-relative'
 const releasesURL = 'https://github.com/ruby/ruby-builder/releases'
 
 const windows = common.windows
