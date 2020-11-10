@@ -28,6 +28,8 @@ jobs:
 
     name: ${{ matrix.os }} ${{ matrix.ruby }}
     runs-on: ${{ matrix.os }}
+    env:
+      JRUBY_OPTS: -Xnative.verbose=true
     steps:
     - uses: actions/checkout@v2
 
