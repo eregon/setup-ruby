@@ -51434,7 +51434,7 @@ async function bundleInstall(gemfile, lockFile, platform, engine, version) {
   await exec.exec('free', ['-m'])
 
   // Always run 'bundle install' to list the gems
-  await exec.exec('bundle', ['install', '--jobs', '4'])
+  await exec.exec('/usr/bin/time', ['-v', 'bundle', 'install', '--jobs', '4'])
 
   // @actions/cache only allows to save for non-existing keys
   if (!(cachedKey !== key)) {
