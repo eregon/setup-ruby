@@ -51403,13 +51403,13 @@ async function bundleInstall(gemfile, lockFile, platform, engine, version) {
   } else {
     // Generate the lockfile so we can use it to compute the cache key.
     // This will also automatically pick up the latest gem versions compatible with the Gemfile.
-    await exec.exec('bundle', ['lock']) // TODO
+    // await exec.exec('bundle', ['lock']) // TODO
   }
 
   // cache key
   const paths = [path]
   const baseKey = await computeBaseKey(platform, engine, version, lockFile)
-  const key = `${baseKey}-${await common.hashFile(lockFile)}`
+  const key = `${baseKey}`
   // If only Gemfile.lock changes we can reuse part of the cache (but it will keep old gem versions in the cache)
   const restoreKeys = [`${baseKey}-`]
   console.log(`Cache key: ${key}`)
