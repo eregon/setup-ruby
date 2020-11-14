@@ -26,6 +26,9 @@ export async function run() {
 
 // entry point when this action is run from other actions
 export async function setupRuby(options = {}) {
+  console.log(process.memoryUsage())
+  await exec.exec('free', ['-m'])
+
   const inputs = { ...options }
   for (const key in inputDefaults) {
     if (!Object.prototype.hasOwnProperty.call(inputs, key)) {
@@ -242,7 +245,7 @@ async function bundleInstall(gemfile, lockFile, platform, engine, version) {
   } else {
     // Generate the lockfile so we can use it to compute the cache key.
     // This will also automatically pick up the latest gem versions compatible with the Gemfile.
-    await exec.exec('bundle', ['lock'])
+    await exec.exec('bundle', ['lock']) // TODO
   }
 
   // cache key
@@ -269,11 +272,14 @@ async function bundleInstall(gemfile, lockFile, platform, engine, version) {
     console.log(`Found cache for key: ${cachedKey}`)
   }
 
+  console.log(process.memoryUsage())
+  await exec.exec('free', ['-m'])
+
   // Always run 'bundle install' to list the gems
   await exec.exec('bundle', ['install', '--jobs', '4'])
 
   // @actions/cache only allows to save for non-existing keys
-  if (cachedKey !== key) {
+  if (!(cachedKey !== key)) {
     // Error handling from https://github.com/actions/cache/blob/master/src/save.ts
     console.log('Saving cache')
     try {
@@ -309,6 +315,7 @@ async function computeBaseKey(platform, engine, version, lockFile) {
   }
 
   key += `-${lockFile}`
+  key += `-${Date.now()}`
   return key
 }
 
