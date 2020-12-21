@@ -119,11 +119,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        gemfile: [ gemfiles/rails5.gemfile, gemfiles/rails6.gemfile ]
-    name: "Test using BUNDLE_GEMFILE=${{ matrix.gemfile }}"
+        gemfile: [ rails5, rails6 ]
+    name: "Test with ${{ matrix.gemfile }} gemfile"
     runs-on: ubuntu-latest
     env:
-      BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+      BUNDLE_GEMFILE: gemfiles/${{ matrix.gemfile }}.gemfile
     steps:
       - uses: actions/checkout@v2
       - uses: ./
