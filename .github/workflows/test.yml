@@ -12,6 +12,7 @@ on:
     - cron: '0 7 * * SUN'
 jobs:
   test:
+    if: false
     strategy:
       fail-fast: false
       matrix:
@@ -154,6 +155,17 @@ jobs:
           ruby-version: truffleruby-head
           bundler-cache: true
       - run: bundle list | grep nokogiri
+
+  testOutput:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./
+      id: setup_ruby
+      with:
+        ruby-version: 2.6
+    - run: ruby -rrbconfig -e 'puts RbConfig::CONFIG["prefix"]'
+    - run: echo ${{ steps.setup_ruby.outputs.ruby-prefix }}
 
   lint:
     runs-on: ubuntu-20.04
