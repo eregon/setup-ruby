@@ -12,6 +12,7 @@ on:
     - cron: '0 7 * * SUN'
 jobs:
   test:
+    if: false
     strategy:
       fail-fast: false
       matrix:
@@ -144,7 +145,7 @@ jobs:
 
   testTruffleRubyNokogiri:
     name: "Test installing a Gemfile with nokogiri on TruffleRuby"
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     env:
       BUNDLE_GEMFILE: gemfiles/nokogiri.gemfile
     steps:
