@@ -12,6 +12,7 @@ on:
     - cron: '0 7 * * SUN'
 jobs:
   test:
+    if: false
     strategy:
       fail-fast: false
       matrix:
@@ -100,6 +101,7 @@ jobs:
       run: gem install sassc -N
 
   testExactBundlerVersion:
+    if: false
     name: "Test with an exact Bundler version"
     runs-on: ubuntu-latest
     steps:
@@ -111,6 +113,7 @@ jobs:
     - run: bundle --version | grep -F "Bundler version 2.2.3"
 
   testDependencyOnBundler1:
+    if: false
     name: "Test gemfile depending on Bundler 1"
     runs-on: ubuntu-latest
     env:
@@ -125,6 +128,7 @@ jobs:
       - run: bundle --version | grep -F "Bundler version 1."
 
   testGemfileMatrix:
+    if: false
     strategy:
       fail-fast: false
       matrix:
@@ -142,8 +146,12 @@ jobs:
       - run: bundle exec rails --version
 
   testTruffleRubyNokogiri:
-    name: "Test installing a Gemfile with nokogiri on TruffleRuby"
-    runs-on: ubuntu-latest
+    name: Test nokogiri TruffleRuby ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, macos-latest ]
+    runs-on: ${{ matrix.os }}
     env:
       BUNDLE_GEMFILE: gemfiles/nokogiri.gemfile
     steps:
@@ -151,10 +159,12 @@ jobs:
       - uses: ./
         with:
           ruby-version: truffleruby-head
-          bundler-cache: true
+          # bundler-cache: true
+      - run: bundle install
       - run: bundle list | grep nokogiri
 
   lint:
+    if: false
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
