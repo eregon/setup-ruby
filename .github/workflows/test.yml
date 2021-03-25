@@ -155,7 +155,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       BUNDLE_GEMFILE: gemfiles/nokogiri.gemfile
-      MAKEFLAGS: "-j3"
+      MAKEFLAGS: "-j4"
     steps:
       - uses: actions/checkout@v2
       - uses: ./
