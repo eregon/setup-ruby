@@ -146,10 +146,11 @@ jobs:
       - run: bundle exec rails --version
 
   testTruffleRubyNokogiri:
-    name: Test nokogiri TruffleRuby ${{ matrix.os }}
+    name: nokogiri TruffleRuby ${{ matrix.os }} ${{ matrix.config }}
     strategy:
       fail-fast: false
       matrix:
+        config: [default, disable-static]
         os: [ ubuntu-latest, macos-latest ]
     runs-on: ${{ matrix.os }}
     env:
@@ -160,6 +161,8 @@ jobs:
         with:
           ruby-version: truffleruby-head
           # bundler-cache: true
+      - run: bundle config --local build.nokogiri --disable-static
+        if: matrix.config == 'disable-static'
       - run: bundle install
       - run: bundle list | grep nokogiri
 
