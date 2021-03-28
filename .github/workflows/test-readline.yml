@@ -9,8 +9,6 @@ jobs:
 
       - name: Set up Ruby
         uses: ./
-        env:
-          ImageOS: ubuntu18
         with:
           ruby-version: 2.4.1
 
