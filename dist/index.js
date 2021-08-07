@@ -58787,6 +58787,7 @@ function getVersions(platform) {
       "head"
     ],
     "truffleruby+graalvm": [
+      "21.2.0",
       "head"
     ]
   }
