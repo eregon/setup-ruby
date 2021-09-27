@@ -33,6 +33,9 @@ export async function setupRuby(options = {}) {
     }
   }
 
+  console.log(`FOO: ${process.env['FOO']}`)
+  console.log(`env: ${Object.keys(process.env)}`)
+
   process.chdir(inputs['working-directory'])
 
   const platform = common.getVirtualEnvironmentName()
