@@ -60098,6 +60098,11 @@ function getAvailableVersions(platform, engine) {
 }
 
 async function install(platform, engine, version) {
+
+  if (true) {
+    throw new Error("message-in-install")
+  }
+
   let rubyPrefix, inToolCache
   if (common.shouldUseToolCache(engine, version)) {
     inToolCache = tc.find('Ruby', version)
