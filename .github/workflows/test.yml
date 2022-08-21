@@ -120,6 +120,10 @@ jobs:
         }
     - run: ls -l $(dirname $(which ruby))
       shell: bash
+
+    - run: bundle install
+      shell: bash
+
     - run: ls -l $(dirname $(which ruby))/bundle
       shell: bash
     - run: chmod +x $(dirname $(which ruby))/bundle
