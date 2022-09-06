@@ -44,7 +44,7 @@ jobs:
 #        bundler-cache: true
 #      continue-on-error: true
     - run: |
-        export RELEASE_URL="https://github.com/graalvm/graalvm-ce-dev-builds/releases/download/22.3.0-dev-20220819_0257"
+        export RELEASE_URL="https://github.com/graalvm/graalvm-ce-dev-builds/releases/download/22.3.0-dev-20220826_0100"
         wget -nv $RELEASE_URL/graalvm-ce-java11-darwin-amd64-dev.tar.gz
         tar xf graalvm-ce-java11-darwin-amd64-dev.tar.gz
         cd graalvm-ce-java11-22.3.0-dev/Contents/Home
