@@ -44,18 +44,23 @@ jobs:
 #        bundler-cache: true
 #      continue-on-error: true
     - run: |
-        wget https://lafo.ssw.uni-linz.ac.at/pub/tmp-graalvm-build-revert-epsilon-gc/graalvm-ce-java17-darwin-amd64-22.3.0-20220905.190239-57.tar.gz
-        tar xf graalvm-ce-java17-darwin-amd64-22.3.0-20220905.190239-57.tar.gz
-        cd graalvm-ce-java17-22.3.0-dev/Contents/Home
-        wget https://lafo.ssw.uni-linz.ac.at/pub/tmp-graalvm-build-revert-epsilon-gc/llvm-installable-svm-java17-darwin-amd64-22.3.0-20220905.204024-57.jar
-        bin/gu install --file llvm-installable-svm-java17-darwin-amd64-22.3.0-20220905.204024-57.jar
-        wget https://lafo.ssw.uni-linz.ac.at/pub/tmp-graalvm-build-revert-epsilon-gc/llvm-toolchain-installable-java17-darwin-amd64-22.3.0-20220905.203944-57.jar
-        bin/gu install --file llvm-toolchain-installable-java17-darwin-amd64-22.3.0-20220905.203944-57.jar
-        wget https://lafo.ssw.uni-linz.ac.at/pub/tmp-graalvm-build-revert-epsilon-gc/ruby-installable-svm-java17-darwin-amd64-22.3.0-20220905.204616-57.jar
-        bin/gu install --file ruby-installable-svm-java17-darwin-amd64-22.3.0-20220905.204616-57.jar
-    - run: graalvm-ce-java17-22.3.0-dev/Contents/Home/languages/ruby/lib/truffle/post_install_hook.sh
-      continue-on-error: true
-    - run: cat graalvm-ce-java17-22.3.0-dev/Contents/Home/languages/ruby/src/main/c/openssl/mkmf.log
+        export RELEASE_URL="https://github.com/graalvm/graalvm-ce-dev-builds/releases/download/22.3.0-dev-20220819_0257"
+        wget -nv $RELEASE_URL/graalvm-ce-java11-darwin-amd64-dev.tar.gz
+        tar xf graalvm-ce-java11-darwin-amd64-dev.tar.gz
+        cd graalvm-ce-java11-22.3.0-dev/Contents/Home
+
+        wget -nv $RELEASE_URL/llvm-installable-svm-java11-darwin-amd64-dev.jar
+        bin/gu install --file llvm-installable-svm-java11-darwin-amd64-dev.jar
+
+        wget -nv $RELEASE_URL/llvm-toolchain-installable-java11-darwin-amd64-dev.jar
+        bin/gu install --file llvm-toolchain-installable-java11-darwin-amd64-dev.jar
+
+        wget -nv $RELEASE_URL/ruby-installable-svm-java11-darwin-amd64-dev.jar
+        bin/gu install --file ruby-installable-svm-java11-darwin-amd64-dev.jar
+
+    - run: graalvm-ce-java11-22.3.0-dev/Contents/Home/languages/ruby/lib/truffle/post_install_hook.sh
+      # continue-on-error: true
+    - run: cat graalvm-ce-java11-22.3.0-dev/Contents/Home/languages/ruby/src/main/c/openssl/mkmf.log
     - run: ruby -v
     - name: PATH
       shell: pwsh
