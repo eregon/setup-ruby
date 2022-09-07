@@ -61,7 +61,7 @@ jobs:
     - run: graalvm-ce-java11-22.3.0-dev/Contents/Home/languages/ruby/lib/truffle/post_install_hook.sh
       continue-on-error: true
       env:
-        TRUFFLERUBYOPT: "--experimental-options --log-process-args --engine.TraceStackTraceInterval=1 --log-subprocess -d"
+        TRUFFLERUBYOPT: "--experimental-options --log-process-args --log-subprocess --use-truffle-regex=false -d"
     - run: cat graalvm-ce-java11-22.3.0-dev/Contents/Home/languages/ruby/src/main/c/openssl/mkmf.log
     - run: ruby -v
     - name: PATH
