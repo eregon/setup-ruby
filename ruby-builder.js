@@ -1,6 +1,7 @@
 const os = require('os')
 const fs = require('fs')
 const path = require('path')
+const core = require('@actions/core')
 const exec = require('@actions/exec')
 const io = require('@actions/io')
 const tc = require('@actions/tool-cache')
@@ -45,6 +46,13 @@ export async function install(platform, engine, version) {
     } else {
       await downloadAndExtract(platform, engine, version, rubyPrefix)
     }
+  }
+
+  if (engine.startsWith('truffleruby')) {
+    console.log("Using TRUFFLERUBYOPT=--engine.Mode=latency to optimize for short test suites speed. Set TRUFFLERUBYOPT=--engine.Mode=default for other cases like benchmarking or long-running processes.")
+    const prevTruffleRubyOpt = process.env['TRUFFLERUBYOPT']
+    const newTruffleRubyOpt = prevTruffleRubyOpt ? `--engine.Mode=latency ${prevTruffleRubyOpt}` : '--engine.Mode=latency'
+    core.exportVariable('TRUFFLERUBYOPT', newTruffleRubyOpt);
   }
 
   return rubyPrefix

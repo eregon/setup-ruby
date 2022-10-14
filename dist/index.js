@@ -68489,6 +68489,7 @@ __nccwpck_require__.r(__webpack_exports__);
 const os = __nccwpck_require__(2037)
 const fs = __nccwpck_require__(7147)
 const path = __nccwpck_require__(1017)
+const core = __nccwpck_require__(2186)
 const exec = __nccwpck_require__(1514)
 const io = __nccwpck_require__(7436)
 const tc = __nccwpck_require__(7784)
@@ -68533,6 +68534,13 @@ async function install(platform, engine, version) {
     } else {
       await downloadAndExtract(platform, engine, version, rubyPrefix)
     }
+  }
+
+  if (engine.startsWith('truffleruby')) {
+    console.log("Using TRUFFLERUBYOPT=--engine.Mode=latency to optimize for short test suites speed. Set TRUFFLERUBYOPT=--engine.Mode=default for other cases like benchmarking or long-running processes.")
+    const prevTruffleRubyOpt = process.env['TRUFFLERUBYOPT']
+    const newTruffleRubyOpt = prevTruffleRubyOpt ? `--engine.Mode=latency ${prevTruffleRubyOpt}` : '--engine.Mode=latency'
+    core.exportVariable('TRUFFLERUBYOPT', newTruffleRubyOpt);
   }
 
   return rubyPrefix
