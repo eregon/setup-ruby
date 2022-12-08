@@ -293,7 +293,7 @@ jobs:
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/psych5.gemfile
     steps:
       - uses: actions/checkout@v3
-      - run: sudo apt install libyaml-dev
+      - run: sudo apt-get install libyaml-dev
       - uses: ./
         with:
           ruby-version: '3.1'
