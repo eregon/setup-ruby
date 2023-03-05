@@ -5,6 +5,7 @@ const core = require('@actions/core')
 const exec = require('@actions/exec')
 const io = require('@actions/io')
 const tc = require('@actions/tool-cache')
+const lockfile = require('proper-lockfile')
 const common = require('./common')
 const rubyBuilderVersions = require('./ruby-builder-versions')
 
@@ -50,24 +51,21 @@ export async function install(platform, engine, version) {
   common.setupPath([path.join(rubyPrefix, 'bin')])
 
   if (!inToolCache) {
-    await preparePrefix(rubyPrefix)
-    if (engine === 'truffleruby+graalvm') {
-      await installWithRubyBuild(engine, version, rubyPrefix)
-    } else {
-      await downloadAndExtract(platform, engine, version, rubyPrefix)
+    await io.mkdirP(rubyPrefix)
+    // 8 retries means wait up to 2**8 seconds, which is 4 minutes 16 seconds
+    const release = await lockfile.lock(rubyPrefix, { retries: 8 })
+    try {
+      if (engine === 'truffleruby+graalvm') {
+        await installWithRubyBuild(engine, version, rubyPrefix)
+      } else {
+        await downloadAndExtract(platform, engine, version, rubyPrefix)
+      }
+    } finally {
+      await release()
     }
   }
 
   return rubyPrefix
-}
-
-async function preparePrefix(rubyPrefix) {
-  const parentDir = path.dirname(rubyPrefix)
-
-  await io.rmRF(rubyPrefix)
-  if (!(fs.existsSync(parentDir) && fs.statSync(parentDir).isDirectory())) {
-    await io.mkdirP(parentDir)
-  }
 }
 
 async function installWithRubyBuild(engine, version, rubyPrefix) {

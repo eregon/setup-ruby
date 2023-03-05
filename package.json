@@ -29,6 +29,7 @@
     "@actions/tool-cache": "^2",
     "linux-os-info": "^2.0.0",
     "macos-release": "^3.1.0",
+    "proper-lockfile": "^4.1.2",
     "semver": "^7.3.7"
   },
   "devDependencies": {
