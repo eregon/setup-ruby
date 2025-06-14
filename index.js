@@ -46,6 +46,11 @@ export async function setupRuby(options = {}) {
   }
   common.inputs.selfHosted = inputs['self-hosted']
 
+  await exec.exec('ps', ['aux'])
+  await exec.exec('pwd')
+  await exec.exec('env')
+
+  console.log("Running await core.platform.getDetails()")
   console.log(await core.platform.getDetails())
 
   process.chdir(inputs['working-directory'])
